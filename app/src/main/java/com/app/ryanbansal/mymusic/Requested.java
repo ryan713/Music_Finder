@@ -27,13 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.app.ryanbansal.mymusic.MusicContract.MusicEntry;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class Requested extends AppCompatActivity {
 
-    private static final int MY_PERMISSIONS_REQUEST_CODE = 200;
+    private final int MY_PERMISSIONS_REQUEST_CODE = 200;
 
     private static boolean STATUS_GRANTED = false;
 
@@ -65,6 +64,8 @@ public class Requested extends AppCompatActivity {
 
     private URL mUrl;
 
+    MusicAdapter mAdapter;
+
     private LoaderManager loaderManager = getLoaderManager();
 
     @Override
@@ -87,7 +88,7 @@ public class Requested extends AppCompatActivity {
         if (request == Home.FROM_DATABASE) {
 
             if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
 
                     ActivityCompat.requestPermissions(this,
@@ -96,7 +97,7 @@ public class Requested extends AppCompatActivity {
 
             }
             else if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
                 updateUIwithCursor();
             }
@@ -108,8 +109,8 @@ public class Requested extends AppCompatActivity {
 
             if (networkInfo != null && networkInfo.isConnected()) {
 
-                MyAdapters.mAdapter = new MusicAdapter(this, new ArrayList<Music>());
-                listView.setAdapter(MyAdapters.mAdapter);
+                mAdapter = new MusicAdapter(this, new ArrayList<Music>());
+                listView.setAdapter(mAdapter);
 
                 finalStringUrl = stringUrlBuilder(BASE_URL);
                 progressBar.setVisibility(View.VISIBLE);
@@ -192,7 +193,7 @@ public class Requested extends AppCompatActivity {
 
     public void UpdateUI(final ArrayList<Music> data) {
         Toast.makeText(this, "Here!", Toast.LENGTH_SHORT).show();
-        MyAdapters.mAdapter.addAll(data);
+        mAdapter.addAll(data);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
