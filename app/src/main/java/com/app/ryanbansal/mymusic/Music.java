@@ -31,7 +31,11 @@ public class Music {
         return mUrl;
     }
 
-    public String getArtist() { return artist; }
+    public String getArtist() { 
+        return artist; 
+    }
 
-    public String getmImageUrl() {return mImageUrl; }
+    public String getmImageUrl() {
+        return mImageUrl; 
+    }
 }
